@@ -547,22 +547,15 @@
 				var propValue = slider.settings.mode === 'vertical' ? 'translate3d(0, ' + value + 'px, 0)' : 'translate3d(' + value + 'px, 0, 0)';
 				// add the CSS transition-duration
 				el.css('-' + slider.cssPrefix + '-transition-duration', duration / 1000 + 's');
-				if(type === 'slide'){
-					setTimeout(function() {
-						// set the property value
-						el.css(slider.animProp, propValue);
-						// if value 0, just update
-						if(value === 0) {
-							updateAfterSlideTransition();
-						} else {
-							// bind a callback method - executes when CSS transition completes
-							el.bind('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function(){
-								// unbind the callback
-								el.unbind('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd');
-								updateAfterSlideTransition();
-							});
-						}
-					}, 0);
+				if (type === 'slide') {
+					// set the property value
+					el.css(slider.animProp, propValue);
+					// bind a callback method - executes when CSS transition completes
+					el.bind('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd', function() {
+						// unbind the callback
+						el.unbind('transitionend webkitTransitionEnd oTransitionEnd MSTransitionEnd');
+						updateAfterSlideTransition();
+					});
 				}else if(type === 'reset'){
 					el.css(slider.animProp, propValue);
 				}else if(type === 'ticker'){
